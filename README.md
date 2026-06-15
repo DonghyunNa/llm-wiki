@@ -53,7 +53,7 @@ claude   # Claude Code 진입
 
 ```markdown
 <!-- 다른 프로젝트의 CLAUDE.md -->
-참고 지식: 위키 지식은 `~/path/to/llm-wiki/wiki/` 를 참조한다 (index.md 부터).
+참고 지식: 위키 지식은 `/path/to/llm-wiki/wiki/` 를 참조한다 (index.md 부터).
 ```
 
 - **장점**: 등록·의존성 0, 즉시. 같은 머신이면 이걸로 충분하다.
@@ -65,10 +65,12 @@ claude   # Claude Code 진입
 vault를 **읽기 전용 MCP 서버**로 노출하면, 다른 세션·에이전트가 구조화된 도구로 조회한다:
 `search_wiki`(가중 키워드 검색) / `get_page` / `list_pages` / `get_backlinks`(그래프).
 
+`/path/to/llm-wiki` 를 이 저장소의 실제 절대경로로 바꾼다. 서버가 vault 안에 있어 vault 경로는 자동 인식된다(env 불필요).
+
 ```bash
 # user scope — 모든 프로젝트에서 사용
 claude mcp add llm-wiki --scope user -- \
-  npx tsx /절대경로/llm-wiki/mcp-server/src/index.ts
+  npx tsx /path/to/llm-wiki/mcp-server/src/index.ts
 ```
 
 또는 참조할 프로젝트의 `.mcp.json`에:
@@ -78,8 +80,7 @@ claude mcp add llm-wiki --scope user -- \
   "mcpServers": {
     "llm-wiki": {
       "command": "npx",
-      "args": ["tsx", "/절대경로/llm-wiki/mcp-server/src/index.ts"],
-      "env": { "WIKI_VAULT_PATH": "/절대경로/llm-wiki" }
+      "args": ["tsx", "/path/to/llm-wiki/mcp-server/src/index.ts"]
     }
   }
 }

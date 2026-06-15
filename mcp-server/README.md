@@ -24,11 +24,13 @@ npm install
 
 ## 연결
 
+아래 `/path/to/llm-wiki` 를 이 저장소의 실제 절대경로로 바꾼다. 서버가 vault 안에 있어 **vault 경로는 자동 인식**된다(env 불필요).
+
 ### A. claude mcp add (권장)
 
 ```bash
 claude mcp add llm-wiki --scope user -- \
-  npx tsx /절대경로/llm-wiki/mcp-server/src/index.ts
+  npx tsx /path/to/llm-wiki/mcp-server/src/index.ts
 ```
 
 ### B. 임의 프로젝트의 `.mcp.json`
@@ -38,8 +40,7 @@ claude mcp add llm-wiki --scope user -- \
   "mcpServers": {
     "llm-wiki": {
       "command": "npx",
-      "args": ["tsx", "/절대경로/llm-wiki/mcp-server/src/index.ts"],
-      "env": { "WIKI_VAULT_PATH": "/절대경로/llm-wiki" }
+      "args": ["tsx", "/path/to/llm-wiki/mcp-server/src/index.ts"]
     }
   }
 }
@@ -47,9 +48,14 @@ claude mcp add llm-wiki --scope user -- \
 
 연결 후 다른 세션에서 `mcp__llm-wiki__search_wiki` 등으로 호출된다.
 
-### 다른 vault 가리키기
+### 다른 vault 가리키기 (옵션)
 
-경로 해석 우선순위: `--vault <path>` 인자 > `WIKI_VAULT_PATH` 환경변수 > 기본값(`mcp-server/`의 부모 디렉토리).
+기본값은 서버가 속한 저장소의 vault다. 서버를 다른 vault에 붙이려면 경로를 명시한다 — 우선순위: `--vault <path>` 인자 > `WIKI_VAULT_PATH` 환경변수 > 기본값(`mcp-server/`의 부모).
+
+```jsonc
+// 예: 별도 vault 를 가리키는 .mcp.json
+"args": ["tsx", "/path/to/llm-wiki/mcp-server/src/index.ts", "--vault", "/path/to/other-vault"]
+```
 
 ## 보안
 
