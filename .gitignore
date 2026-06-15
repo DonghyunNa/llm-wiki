@@ -1,0 +1,16 @@
+.DS_Store
+.obsidian/workspace*
+.obsidian/cache
+.trash/
+
+raw/*
+!raw/.gitkeep
+!raw/README.md
+
+# 데모 소스는 커밋한다 (방문자가 ingest 입력을 볼 수 있게).
+# wipe-demo.sh 실행 시 Next.js 데모 raw는 삭제된다.
+!raw/karpathy-llm-wiki-comments.md
+!raw/why-nextjs-default-stack.md
+!raw/against-nextjs-default.md
+
+.claude/settings.local.json
